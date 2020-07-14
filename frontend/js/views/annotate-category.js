@@ -88,7 +88,8 @@ define(["jquery",
                 "click .catItem-header i.scale": "editScale",
                 "focusout .catItem-header input": "onFocusOut",
                 "keydown .catItem-header input": "onKeyDown",
-                "click .catItem-add": "onCreateLabel"
+                "click .catItem-add": "onCreateLabel",
+                "click .seriesId": "onCheckboxChange"
             },
 
             /**
@@ -338,6 +339,26 @@ define(["jquery",
             onColorChange: function (id, newValue) {
                 this.model.setColor(newValue);
                 this.model.save();
+            },
+
+            /**
+             * Listener for color selection through color picker
+             * @alias module:views-annotate-category.CategoryView#onColorChange
+             * @param  {string} id       Id of the colorpicker element
+             * @param  {string} newValue Value of the selected color
+             */
+            onCheckboxChange: function (newValue) {
+                alert(newValue);
+                alert(video.seriesId);
+                if (newValue) {
+                    // Make API call, get series
+
+                    // Set ID
+
+                } else {
+                    this.model.setSeriesId("")
+                    this.model.save();
+                }
             },
 
             /**

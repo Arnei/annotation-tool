@@ -31,13 +31,15 @@ public final class VideoImpl extends ResourceImpl implements Video {
 
   private final long id;
   private final String extId;
+  private final String extSeriesId;
 
-  public VideoImpl(long id, String extId, Resource resource) {
+  public VideoImpl(long id, String extId, String extSeriesId, Resource resource) {
     super(Option.option(resource.getAccess()), resource.getCreatedBy(), resource.getUpdatedBy(), resource
             .getDeletedBy(), resource.getCreatedAt(), resource.getUpdatedAt(), resource.getDeletedAt(), resource
             .getTags());
     this.id = id;
     this.extId = extId;
+    this.extSeriesId = extSeriesId;
   }
 
   @Override
@@ -53,6 +55,11 @@ public final class VideoImpl extends ResourceImpl implements Video {
   @Override
   public String getExtId() {
     return extId;
+  }
+
+  @Override
+  public String getExtSeriesId() {
+    return extSeriesId;
   }
 
   @Override

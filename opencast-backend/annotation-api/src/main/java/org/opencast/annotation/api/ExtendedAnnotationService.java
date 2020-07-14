@@ -121,7 +121,7 @@ public interface ExtendedAnnotationService {
    * @throws ExtendedAnnotationException
    *           if an error occurs while storing/retrieving from persistence storage
    */
-  Video createVideo(String extId, Resource resource) throws ExtendedAnnotationException;
+  Video createVideo(String extId, String extSeriesId, Resource resource) throws ExtendedAnnotationException;
 
   /**
    * Update a video.

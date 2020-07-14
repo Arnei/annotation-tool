@@ -194,6 +194,18 @@ define(["underscore",
             },
 
             /**
+             * Change category seriesId
+             * @alias module:models-category.Category#setSeriesId
+             * @param  {string} id the new id
+             */
+            setSeriesId: function (seriesId) {
+                var settings = _.clone(this.get("settings"));
+                settings.seriesId = seriesId;
+
+                this.set("settings", settings);
+            },
+
+            /**
              * Override the default toJSON function to ensure complete JSONing.
              * @alias module:models-category.Category#toJSON
              * @param {Object} options The options to control the "JSONification" of this collection

@@ -21,4 +21,6 @@ public interface Video extends Resource {
 
   /** Get the video's id in the surrounding video portal. */
   String getExtId();
+
+  String getExtSeriesId();
 }

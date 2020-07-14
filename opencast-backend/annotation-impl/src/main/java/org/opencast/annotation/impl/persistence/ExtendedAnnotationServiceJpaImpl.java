@@ -181,8 +181,8 @@ public final class ExtendedAnnotationServiceJpaImpl implements ExtendedAnnotatio
   }
 
   @Override
-  public Video createVideo(String extId, Resource resource) throws ExtendedAnnotationException {
-    final VideoDto dto = VideoDto.create(extId, resource);
+  public Video createVideo(String extId, String extSeriesId, Resource resource) throws ExtendedAnnotationException {
+    final VideoDto dto = VideoDto.create(extId, extSeriesId, resource);
     return tx(Queries.persist(dto)).toVideo();
   }
 
@@ -191,7 +191,7 @@ public final class ExtendedAnnotationServiceJpaImpl implements ExtendedAnnotatio
     update("Video.findById", v.getId(), new Effect<VideoDto>() {
       @Override
       protected void run(VideoDto dto) {
-        dto.update(v.getExtId(), v);
+        dto.update(v.getExtId(), v.getExtSeriesId(), v);
       }
     });
   }
@@ -199,7 +199,7 @@ public final class ExtendedAnnotationServiceJpaImpl implements ExtendedAnnotatio
   @Override
   public boolean deleteVideo(Video video) throws ExtendedAnnotationException {
     Resource deleteResource = deleteResource(video);
-    final Video updated = new VideoImpl(video.getId(), video.getExtId(), deleteResource);
+    final Video updated = new VideoImpl(video.getId(), video.getExtId(), video.getExtSeriesId(), deleteResource);
     updateVideo(updated);
 
     List<Track> tracks = getTracks(video.getId(), none(), none(), none(), none(), none());

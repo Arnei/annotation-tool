@@ -229,7 +229,9 @@ public abstract class AbstractExtendedAnnotationsRestService {
   @POST
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/videos")
-  public Response postVideos(@FormParam("video_extid") final String videoExtId, @FormParam("tags") final String tags) {
+  public Response postVideos(@FormParam("video_extid") final String videoExtId,
+          @FormParam("video_extseriesid") final String videoExtSeriesId,
+          @FormParam("tags") final String tags) {
     return run(array(videoExtId), new Function0<Response>() {
       @Override
       public Response apply() {
@@ -246,7 +248,7 @@ public abstract class AbstractExtendedAnnotationsRestService {
           return BAD_REQUEST;
 
         Resource resource = eas().createResource(tagsMap.bind(Functions.identity()));
-        final Video v = eas().createVideo(videoExtId, resource);
+        final Video v = eas().createVideo(videoExtId, videoExtSeriesId, resource);
         return Response.created(videoLocationUri(v))
                 .entity(Strings.asStringNull().apply(VideoDto.toJson.apply(eas(), v))).build();
       }
@@ -257,6 +259,7 @@ public abstract class AbstractExtendedAnnotationsRestService {
   @Produces(MediaType.APPLICATION_JSON)
   @Path("/videos")
   public Response putVideo(@FormParam("video_extid") final String videoExtId,
+          @FormParam("video_extseriesid") final String videoExtSeriesId,
           @FormParam("access") final Integer access, @FormParam("tags") final String tags) {
     return run(array(videoExtId), new Function0<Response>() {
       @Override
@@ -279,7 +282,7 @@ public abstract class AbstractExtendedAnnotationsRestService {
               return UNAUTHORIZED;
 
             Resource resource = eas().updateResource(v, tags);
-            final Video updated = new VideoImpl(v.getId(), videoExtId, resource);
+            final Video updated = new VideoImpl(v.getId(), videoExtId, videoExtSeriesId, resource);
             if (!v.equals(updated)) {
               eas().updateVideo(updated);
               v = updated;
@@ -293,6 +296,7 @@ public abstract class AbstractExtendedAnnotationsRestService {
             Resource resource = eas().createResource(tags);
             final Video v = eas().createVideo(
                     videoExtId,
+                    videoExtSeriesId,
                     new ResourceImpl(option(access), resource.getCreatedBy(), resource.getUpdatedBy(), resource
                             .getDeletedBy(), resource.getCreatedAt(), resource.getUpdatedAt(), resource.getDeletedAt(),
                             resource.getTags()));

@@ -225,6 +225,7 @@ define(["jquery",
                 return searchResult.then(function (result) {
                     return {
                         title: result.dcTitle,
+                        video_extseriesid: result.dcIsPartOf,
                         src_owner: result.dcCreator,
                         src_creaton_date: result.dcCreated
                     };

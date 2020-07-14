@@ -99,6 +99,10 @@ define(["underscore",
                     this.get("tracks").fetch({ async: false });
                     this.get("scales").fetch({ async: false });
                 }
+
+                if(attr.seriesId) {
+                    this.set("seriesId", attr.seriesId);
+                }
             },
 
             /**

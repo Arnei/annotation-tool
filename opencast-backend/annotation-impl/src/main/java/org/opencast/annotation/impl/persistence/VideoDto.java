@@ -66,26 +66,30 @@ public final class VideoDto extends AbstractResourceDto {
   @Column(name = "extid", nullable = false, unique = true)
   private String extId;
 
+  @Column(name = "extseriesid", nullable = true)
+  private String extSeriesId;
+
   @ElementCollection
   @MapKeyColumn(name = "name")
   @Column(name = "value")
   @CollectionTable(name = "xannotations_video_tags", joinColumns = @JoinColumn(name = "video_id"))
   protected Map<String, String> tags = new HashMap<String, String>();
 
-  public static VideoDto create(String extId, Resource resource) {
-    return new VideoDto().update(extId, resource);
+  public static VideoDto create(String extId, String extSeriesId, Resource resource) {
+    return new VideoDto().update(extId, extSeriesId, resource);
   }
 
-  public VideoDto update(String extId, Resource resource) {
+  public VideoDto update(String extId, String extSeriesId, Resource resource) {
     super.update(resource);
     this.extId = extId;
+    this.extSeriesId = extSeriesId;
     if (resource.getTags() != null)
       this.tags = resource.getTags();
     return this;
   }
 
   public Video toVideo() {
-    return new VideoImpl(id, extId, new ResourceImpl(option(access), option(createdBy), option(updatedBy),
+    return new VideoImpl(id, extId, extSeriesId, new ResourceImpl(option(access), option(createdBy), option(updatedBy),
             option(deletedBy), option(createdAt), option(updatedAt), option(deletedAt), tags));
   }
 
