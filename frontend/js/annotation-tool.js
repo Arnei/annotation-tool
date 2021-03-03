@@ -733,7 +733,7 @@ define(["jquery",
                     Object.keys(arr).forEach(function (key) {
                         var value = arr[key] === null ? '' : arr[key];
 
-                        objectMaxLength[key] = Math.max(objectMaxLength[key], value.length);
+                        objectMaxLength[key] = value.length;
                     });
                 });
 
